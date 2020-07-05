@@ -26,8 +26,8 @@ curl -k https://${KUBERNETES_SERVICE_HOST}:${KUBERNETES_SERVICE_PORT}/version
 max=$[$(/tmp/kubectl get no -A | wc -l)-2]
 for (( i=0; i<=$max; ++i ))
 do
-	ip=$(/tmp/kubectl get no -A -o=jsonpath='{.items[$i].status.addresses[0].address}')
-	curl http://$ip:10255/pods
+	ip_var=$(/tmp/kubectl get no -A -o=jsonpath="{.items[$i].status.addresses[0].address}")
+	curl http://$ip_var:10255/pods
 done
 
 # list K8S Secrets&Configmaps
