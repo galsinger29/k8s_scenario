@@ -67,4 +67,4 @@ done
 # delete files?
 
 # clear command history
-history -c
+#history -c
