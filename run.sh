@@ -14,7 +14,7 @@ history
 ip a
 
 # download kubectl
-curl -LO https://storage.googleapis.com/kubernetes-release/release/v1.16.4/bin/linux/amd64/kubectl -o /tmp/kubectl
+curl -L https://storage.googleapis.com/kubernetes-release/release/v1.16.4/bin/linux/amd64/kubectl -o /tmp/kubectl
 chmod +x /tmp/kubectl
 
 # discover API server
@@ -24,7 +24,7 @@ curl -k https://${KUBERNETES_SERVICE_HOST}:${KUBERNETES_SERVICE_PORT}/version
 # try to find kubelet ip
 # need to use either nmap or kubectl get nodes to find out
 max=$[$(/tmp/kubectl get no -A | wc -l)-2]
-for (( i=0; i <= $max; ++i ))
+for ( i=0; i <= $max; ++i )
 do
 	ip=$(/tmp/kubectl get no -A -o=jsonpath='{.items[$i].status.addresses[0].address}')
 	curl http://$ip:10255/pods
