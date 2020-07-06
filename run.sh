@@ -5,7 +5,8 @@
 env | grep -i kube
 
 # SA token
-ls /var/run/secrets/kubernetes.io/serviceaccount
+ls -la /var/run/secrets/kubernetes.io/serviceaccount
+cat /var/run/secrets/kubernetes.io/serviceaccount/token
 
 # command history
 history
