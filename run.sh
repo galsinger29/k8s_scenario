@@ -1,8 +1,11 @@
 #!/bin/bash
 
+whoami
+
 #find out if in kubernetes
 #k8s environment variables
 env | grep -i kube
+env
 
 # SA token
 ls -la /var/run/secrets/kubernetes.io/serviceaccount
