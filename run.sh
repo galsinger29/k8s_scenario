@@ -23,7 +23,7 @@ chmod +x /tmp/kubectl
 
 # discover API server
 curl -k https://${KUBERNETES_SERVICE_HOST}:${KUBERNETES_SERVICE_PORT}/version
-/tmp/kubectl auth can-i --list
+sudo /tmp/kubectl auth can-i --list
 
 # try to find kubelet ip
 # need to use either nmap or kubectl get nodes to find out
