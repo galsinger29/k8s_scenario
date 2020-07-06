@@ -38,6 +38,7 @@ done
 /tmp/kubectl run nginx --image=nginx --generator=run-pod/v1
 
 # exec into pod 
+sleep 15  # wait for pod to initiate before exec
 /tmp/kubectl exec nginx sleep 1
 
 # kill pod nginx
