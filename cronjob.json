@@ -2,7 +2,7 @@
   "apiVersion": "batch/v1beta1",
   "kind": "CronJob",
   "metadata": {
-    "name": "nginx-cronjob-demo"
+    "name": "scenario-demo-nginx-cronjob"
   },
   "spec": {
     "schedule": "* */1 * * *",
@@ -12,7 +12,7 @@
           "spec": {
             "containers": [
               {
-                "name": "nginx-cronjob-demo",
+                "name": "scenario-demo-nginx-cronjob",
                 "image": "nginx:1.7.9"
               }
             ],
