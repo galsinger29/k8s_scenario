@@ -2,13 +2,13 @@
   "kind": "ClusterRoleBinding",
   "apiVersion": "rbac.authorization.k8s.io/v1",
   "metadata": {
-    "name": "default-to-admin-bind-demo",
+    "name": "scenario-demo-default-to-admin-bind",
     "namespace": "default"
   },
   "subjects": [
     {
       "kind": "ServiceAccount",
-      "name": "tester-sa-demo",
+      "name": "scenario-demo-tester-sa",
       "namespace": "default"
     }
   ],
