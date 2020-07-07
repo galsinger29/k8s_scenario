@@ -1,0 +1,40 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: wp-cve
+  labels: 
+    app : wordpress
+spec:
+  containers:
+  - name: wp-cve
+    image: galsinger/wp_cve
+
+
+"""apiVersion: v1
+kind: Service
+metadata:
+  name: wordpress-lb
+spec:
+  type: LoadBalancer
+  selector:
+    app: wordpress
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+"""
+
+apiVersion: v1
+kind: Service
+metadata:  
+  name: wordpress-np
+spec:
+  selector:    
+    app: wordpress
+  type: NodePort
+  ports:  
+  - name: http
+    port: 80
+    targetPort: 80
+    nodePort: 30036
+    protocol: TCP

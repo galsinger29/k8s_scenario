@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: nginx-priv
+  name: nginx-priv-demo
 spec:
   containers:
-  - name: nginx-priv
+  - name: nginx-priv-demo
     image: nginx
     securityContext:
       privileged: True

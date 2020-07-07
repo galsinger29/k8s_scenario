@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: nginx-priv-sa
+  name: nginx-priv-sa-demo
 spec:
   containers:
-  - name: nginx-priv-sa
+  - name: nginx-priv-sa-demo
     image: nginx
     securityContext:
       privileged: True
-  serviceAccountName: tester-sa
+  serviceAccountName: tester-sa-demo

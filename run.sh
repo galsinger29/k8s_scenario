@@ -39,14 +39,14 @@ done
 /tmp/kubectl get configmaps -A
 
 # create new pod
-/tmp/kubectl run nginx --image=nginx --generator=run-pod/v1
+/tmp/kubectl run nginx-demo --image=nginx --generator=run-pod/v1
 
 # exec into pod 
 sleep 15  # wait for pod to initiate before exec
-/tmp/kubectl exec nginx sleep 1
+/tmp/kubectl exec nginx-demo sleep 1
 
 # kill pod nginx
-/tmp/kubectl delete po nginx
+/tmp/kubectl delete po nginx-demo
 
 # cronjob
 /tmp/kubectl create -f ./cronjob.json
@@ -63,7 +63,7 @@ sleep 15  # wait for pod to initiate before exec
 /tmp/kubectl delete -f ./privileged_pod.yaml
 
 # create ServiceAccount
-/tmp/kubectl create serviceaccount tester-sa
+/tmp/kubectl create serviceaccount tester-sa-demo
 
 # bind tester-sa ServiceAccount to cluster-admin
 /tmp/kubectl create -f ./clusterbind.json
@@ -78,7 +78,7 @@ sleep 15  # wait for pod to initiate before exec
 /tmp/kubectl delete -f ./clusterbind.json
 
 # delete ServiceAccount
-/tmp/kubectl delete serviceaccount tester-sa
+/tmp/kubectl delete serviceaccount tester-sa-demo
 
 # deletion of Kubernetes Events
 /tmp/kubectl delete events --all
